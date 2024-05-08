@@ -1,0 +1,1080 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "CdkLambdaCallAppSyncStack": {
+        "id": "CdkLambdaCallAppSyncStack",
+        "path": "CdkLambdaCallAppSyncStack",
+        "children": {
+          "Api": {
+            "id": "Api",
+            "path": "CdkLambdaCallAppSyncStack/Api",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/Api/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLApi",
+                  "aws:cdk:cloudformation:props": {
+                    "authenticationType": "API_KEY",
+                    "name": "TriggeredByLambda"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLApi",
+                  "version": "2.80.0"
+                }
+              },
+              "Schema": {
+                "id": "Schema",
+                "path": "CdkLambdaCallAppSyncStack/Api/Schema",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLSchema",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "ApiF70053CD",
+                        "ApiId"
+                      ]
+                    },
+                    "definition": "type Todo {\n  id: ID!\n  name: String!\n  description: String\n  createdAt: AWSDateTime!\n  updatedAt: AWSDateTime!\n}\n\ntype ModelTodoConnection {\n  items: [Todo]\n  nextToken: String\n}\n\ntype Query {\n  getTodo(id: ID!): Todo\n  listTodos(limit: Int, nextToken: String): ModelTodoConnection\n}\n\ntype Mutation {\n  createTodo(id: ID, name: String!, description: String): Todo\n  updateTodo(id: ID!, name: String, description: String): Todo\n  deleteTodo(id: ID!): Todo\n}\n\ntype Subscription {\n  onCreateTodo: Todo @aws_subscribe(mutations: [\"createTodo\"])\n  onUpdateTodo: Todo @aws_subscribe(mutations: [\"updateTodo\"])\n  onDeleteTodo: Todo @aws_subscribe(mutations: [\"deleteTodo\"])\n}\n"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLSchema",
+                  "version": "2.80.0"
+                }
+              },
+              "DefaultApiKey": {
+                "id": "DefaultApiKey",
+                "path": "CdkLambdaCallAppSyncStack/Api/DefaultApiKey",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::ApiKey",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "ApiF70053CD",
+                        "ApiId"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnApiKey",
+                  "version": "2.80.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "CdkLambdaCallAppSyncStack/Api/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.80.0"
+                }
+              },
+              "none": {
+                "id": "none",
+                "path": "CdkLambdaCallAppSyncStack/Api/none",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CdkLambdaCallAppSyncStack/Api/none/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "ApiF70053CD",
+                            "ApiId"
+                          ]
+                        },
+                        "name": "none",
+                        "type": "NONE"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.NoneDataSource",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_appsync.GraphqlApi",
+              "version": "2.80.0"
+            }
+          },
+          "createTodoFunction": {
+            "id": "createTodoFunction",
+            "path": "CdkLambdaCallAppSyncStack/createTodoFunction",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "CdkLambdaCallAppSyncStack/createTodoFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CdkLambdaCallAppSyncStack/createTodoFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CdkLambdaCallAppSyncStack/createTodoFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/createTodoFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::FunctionConfiguration",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "ApiF70053CD",
+                        "ApiId"
+                      ]
+                    },
+                    "dataSourceName": "none",
+                    "name": "createTodoFunction",
+                    "codeS3Location": {
+                      "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/78893354d53c45ab327cc77edf2d21a343502dc7e95c3266c54844b9f76b1a2e.js"
+                    },
+                    "functionVersion": "2018-05-29",
+                    "runtime": {
+                      "name": "APPSYNC_JS",
+                      "runtimeVersion": "1.0.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnFunctionConfiguration",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_appsync.AppsyncFunction",
+              "version": "2.80.0"
+            }
+          },
+          "PipelineResolver": {
+            "id": "PipelineResolver",
+            "path": "CdkLambdaCallAppSyncStack/PipelineResolver",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/PipelineResolver/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "ApiF70053CD",
+                        "ApiId"
+                      ]
+                    },
+                    "fieldName": "createTodo",
+                    "typeName": "Mutation",
+                    "code": "\n        // The before step\n        export function request(...args) {\n          console.log(args);\n          return {}\n        }\n    \n        // The after step\n        export function response(ctx) {\n          return ctx.prev.result\n        }\n      ",
+                    "kind": "PIPELINE",
+                    "pipelineConfig": {
+                      "functions": [
+                        {
+                          "Fn::GetAtt": [
+                            "createTodoFunction2D3179A2",
+                            "FunctionId"
+                          ]
+                        }
+                      ]
+                    },
+                    "runtime": {
+                      "name": "APPSYNC_JS",
+                      "runtimeVersion": "1.0.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_appsync.Resolver",
+              "version": "2.80.0"
+            }
+          },
+          "trigger": {
+            "id": "trigger",
+            "path": "CdkLambdaCallAppSyncStack/trigger",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CdkLambdaCallAppSyncStack/trigger/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "CdkLambdaCallAppSyncStack/trigger/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "appsync:GraphQL",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":appsync:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":",
+                                        {
+                                          "Ref": "AWS::AccountId"
+                                        },
+                                        ":apis/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "ApiF70053CD",
+                                            "ApiId"
+                                          ]
+                                        },
+                                        "/types/Mutation/*"
+                                      ]
+                                    ]
+                                  }
+                                },
+                                {
+                                  "Action": "dynamodb:ListStreams",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": [
+                                    "dynamodb:DescribeStream",
+                                    "dynamodb:GetRecords",
+                                    "dynamodb:GetShardIterator"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "RandomDataTable85033148",
+                                      "StreamArn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "triggerServiceRoleDefaultPolicy87FA9B3E",
+                            "roles": [
+                              {
+                                "Ref": "triggerServiceRole07E9ABD5"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.80.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.80.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "CdkLambdaCallAppSyncStack/trigger/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/trigger/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "f49a4250b9437742ff5864919af260881b3196390c47e444bb56eb2046cff033.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "triggerServiceRole07E9ABD5",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "GRAPHQL_URL": {
+                          "Fn::GetAtt": [
+                            "ApiF70053CD",
+                            "GraphQLUrl"
+                          ]
+                        },
+                        "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+                      }
+                    },
+                    "handler": "index.handler",
+                    "runtime": "nodejs16.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.80.0"
+                }
+              },
+              "DynamoDBEventSource:CdkLambdaCallAppSyncStackRandomDataTable1376B02B": {
+                "id": "DynamoDBEventSource:CdkLambdaCallAppSyncStackRandomDataTable1376B02B",
+                "path": "CdkLambdaCallAppSyncStack/trigger/DynamoDBEventSource:CdkLambdaCallAppSyncStackRandomDataTable1376B02B",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CdkLambdaCallAppSyncStack/trigger/DynamoDBEventSource:CdkLambdaCallAppSyncStackRandomDataTable1376B02B/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::EventSourceMapping",
+                      "aws:cdk:cloudformation:props": {
+                        "functionName": {
+                          "Ref": "trigger73DC69F8"
+                        },
+                        "batchSize": 100,
+                        "eventSourceArn": {
+                          "Fn::GetAtt": [
+                            "RandomDataTable85033148",
+                            "StreamArn"
+                          ]
+                        },
+                        "startingPosition": "LATEST"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnEventSourceMapping",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.EventSourceMapping",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
+              "version": "2.80.0"
+            }
+          },
+          "RandomDataTable": {
+            "id": "RandomDataTable",
+            "path": "CdkLambdaCallAppSyncStack/RandomDataTable",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/RandomDataTable/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "keySchema": [
+                      {
+                        "attributeName": "id",
+                        "keyType": "HASH"
+                      }
+                    ],
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "id",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "billingMode": "PAY_PER_REQUEST",
+                    "streamSpecification": {
+                      "streamViewType": "NEW_AND_OLD_IMAGES"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                  "version": "2.80.0"
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "CdkLambdaCallAppSyncStack/RandomDataTable/ScalingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+              "version": "2.80.0"
+            }
+          },
+          "LambdaExecutionRole": {
+            "id": "LambdaExecutionRole",
+            "path": "CdkLambdaCallAppSyncStack/LambdaExecutionRole",
+            "children": {
+              "ImportLambdaExecutionRole": {
+                "id": "ImportLambdaExecutionRole",
+                "path": "CdkLambdaCallAppSyncStack/LambdaExecutionRole/ImportLambdaExecutionRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/LambdaExecutionRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.80.0"
+            }
+          },
+          "AccessPolicy": {
+            "id": "AccessPolicy",
+            "path": "CdkLambdaCallAppSyncStack/AccessPolicy",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/AccessPolicy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": [
+                            "dynamodb:PutItem",
+                            "dynamodb:GetItem",
+                            "dynamodb:UpdateItem",
+                            "dynamodb:DeleteItem"
+                          ],
+                          "Effect": "Allow",
+                          "Resource": {
+                            "Fn::GetAtt": [
+                              "RandomDataTable85033148",
+                              "Arn"
+                            ]
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policyName": "AccessPolicyD18466CD",
+                    "roles": [
+                      {
+                        "Ref": "LambdaExecutionRoleD5C26073"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Policy",
+              "version": "2.80.0"
+            }
+          },
+          "myFunction": {
+            "id": "myFunction",
+            "path": "CdkLambdaCallAppSyncStack/myFunction",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "CdkLambdaCallAppSyncStack/myFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CdkLambdaCallAppSyncStack/myFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CdkLambdaCallAppSyncStack/myFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/myFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "548311c4921fcf19c35e58346232b313003d5a81c110daed1f3586d7984b0795.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "LambdaExecutionRoleD5C26073",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "interval_in_minutes": "5",
+                        "RANDOMDATA_TABLE_NAME": {
+                          "Ref": "RandomDataTable85033148"
+                        },
+                        "RANDOMDATA_TABLE_ARN": {
+                          "Fn::GetAtt": [
+                            "RandomDataTable85033148",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "handler": "handler.handler",
+                    "memorySize": 128,
+                    "runtime": "python3.9",
+                    "timeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.80.0"
+            }
+          },
+          "scheduler-role": {
+            "id": "scheduler-role",
+            "path": "CdkLambdaCallAppSyncStack/scheduler-role",
+            "children": {
+              "Importscheduler-role": {
+                "id": "Importscheduler-role",
+                "path": "CdkLambdaCallAppSyncStack/scheduler-role/Importscheduler-role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/scheduler-role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "scheduler.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.80.0"
+            }
+          },
+          "schedule-policy": {
+            "id": "schedule-policy",
+            "path": "CdkLambdaCallAppSyncStack/schedule-policy",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/schedule-policy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "lambda:InvokeFunction",
+                          "Effect": "Allow",
+                          "Resource": {
+                            "Fn::GetAtt": [
+                              "myFunction884E1557",
+                              "Arn"
+                            ]
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policyName": "ScheduleToInvokeLambdas",
+                    "roles": [
+                      {
+                        "Ref": "schedulerrole9B80A9F3"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Policy",
+              "version": "2.80.0"
+            }
+          },
+          "schedule-group": {
+            "id": "schedule-group",
+            "path": "CdkLambdaCallAppSyncStack/schedule-group",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::Scheduler::ScheduleGroup",
+              "aws:cdk:cloudformation:props": {
+                "name": "SchedulesForLambda"
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_scheduler.CfnScheduleGroup",
+              "version": "2.80.0"
+            }
+          },
+          "my-schedule": {
+            "id": "my-schedule",
+            "path": "CdkLambdaCallAppSyncStack/my-schedule",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::Scheduler::Schedule",
+              "aws:cdk:cloudformation:props": {
+                "flexibleTimeWindow": {
+                  "mode": "OFF"
+                },
+                "scheduleExpression": "rate(5 minute)",
+                "target": {
+                  "arn": {
+                    "Fn::GetAtt": [
+                      "myFunction884E1557",
+                      "Arn"
+                    ]
+                  },
+                  "roleArn": {
+                    "Fn::GetAtt": [
+                      "schedulerrole9B80A9F3",
+                      "Arn"
+                    ]
+                  }
+                },
+                "groupName": "SchedulesForLambda"
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_scheduler.CfnSchedule",
+              "version": "2.80.0"
+            }
+          },
+          "toIot": {
+            "id": "toIot",
+            "path": "CdkLambdaCallAppSyncStack/toIot",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CdkLambdaCallAppSyncStack/toIot/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "CdkLambdaCallAppSyncStack/toIot/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CdkLambdaCallAppSyncStack/toIot/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "CdkLambdaCallAppSyncStack/toIot/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "CdkLambdaCallAppSyncStack/toIot/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "iot:*",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "toIotServiceRoleDefaultPolicyF511407D",
+                            "roles": [
+                              {
+                                "Ref": "toIotServiceRoleB86485C8"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.80.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.80.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "CdkLambdaCallAppSyncStack/toIot/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CdkLambdaCallAppSyncStack/toIot/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.80.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CdkLambdaCallAppSyncStack/toIot/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.80.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.80.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkLambdaCallAppSyncStack/toIot/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "548311c4921fcf19c35e58346232b313003d5a81c110daed1f3586d7984b0795.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "toIotServiceRoleB86485C8",
+                        "Arn"
+                      ]
+                    },
+                    "functionName": "toIot",
+                    "handler": "toIotHandler.handler",
+                    "runtime": "python3.9"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.80.0"
+            }
+          },
+          "graphqlUrl": {
+            "id": "graphqlUrl",
+            "path": "CdkLambdaCallAppSyncStack/graphqlUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.80.0"
+            }
+          },
+          "apiId": {
+            "id": "apiId",
+            "path": "CdkLambdaCallAppSyncStack/apiId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.80.0"
+            }
+          },
+          "functionArn": {
+            "id": "functionArn",
+            "path": "CdkLambdaCallAppSyncStack/functionArn",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.80.0"
+            }
+          },
+          "functionName": {
+            "id": "functionName",
+            "path": "CdkLambdaCallAppSyncStack/functionName",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.80.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "CdkLambdaCallAppSyncStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CdkLambdaCallAppSyncStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.80.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "CdkLambdaCallAppSyncStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.80.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "CdkLambdaCallAppSyncStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.80.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "CdkLambdaCallAppSyncStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.80.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.80.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.3.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.80.0"
+    }
+  }
+}

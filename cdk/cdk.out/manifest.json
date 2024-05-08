@@ -1,0 +1,220 @@
+{
+  "version": "31.0.0",
+  "artifacts": {
+    "CdkLambdaCallAppSyncStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkLambdaCallAppSyncStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkLambdaCallAppSyncStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CdkLambdaCallAppSyncStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f78b116fade9eaa5bed8f6102978cc26dd55b818beda5d86b9217b81a5e203c0.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkLambdaCallAppSyncStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkLambdaCallAppSyncStack.assets"
+      ],
+      "metadata": {
+        "/CdkLambdaCallAppSyncStack/Api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiF70053CD"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/Api/Schema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiSchema510EECD7"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/Api/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiDefaultApiKeyF991C37B"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/Api/none/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apinone1F55F3F3"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/createTodoFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "createTodoFunction2D3179A2"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/PipelineResolver/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineResolver36C637FD"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/trigger/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "triggerServiceRole07E9ABD5"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/trigger/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "triggerServiceRoleDefaultPolicy87FA9B3E"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/trigger/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "trigger73DC69F8"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/trigger/DynamoDBEventSource:CdkLambdaCallAppSyncStackRandomDataTable1376B02B/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "triggerDynamoDBEventSourceCdkLambdaCallAppSyncStackRandomDataTable1376B02B364B8746"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/RandomDataTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RandomDataTable85033148"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/LambdaExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaExecutionRoleD5C26073"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/AccessPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AccessPolicyD18466CD"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/myFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "myFunction884E1557"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/scheduler-role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "schedulerrole9B80A9F3"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/schedule-policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "schedulepolicyB4BD75DE"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/schedule-group": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "schedulegroup"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/my-schedule": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "myschedule"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/toIot/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "toIotServiceRoleB86485C8"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/toIot/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "toIotServiceRoleDefaultPolicyF511407D"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/toIot/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "toIot387D3CEB"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/graphqlUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "graphqlUrl"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/apiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiId"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/functionArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "functionArn"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/functionName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "functionName"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkLambdaCallAppSyncStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkLambdaCallAppSyncStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
